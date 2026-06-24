@@ -82,7 +82,13 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="mt-4 text-center text-xs text-gray-600">
-          ViralVault OS · Restricted Access
+          TikTokShop.art Admin · Restricted Access
+        </p>
+        <p className="mt-2 text-center text-xs text-gray-700">
+          First time?{' '}
+          <a href="/admin/setup" className="text-gray-500 hover:text-gray-300 underline">
+            Create your account
+          </a>
         </p>
       </div>
     </div>
