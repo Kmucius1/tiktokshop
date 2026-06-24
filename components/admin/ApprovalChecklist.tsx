@@ -16,7 +16,6 @@ const items: { key: keyof ProductChecklist; label: string }[] = [
   { key: 'margin_checked', label: 'Margin acceptable (≥40%)' },
   { key: 'test_order_placed', label: 'Test order placed' },
   { key: 'test_order_passed', label: 'Test order passed' },
-  { key: 'approved_for_shopify', label: 'Approved for Shopify' },
   { key: 'approved_for_tiktok', label: 'Approved for marketplace' },
 ]
 

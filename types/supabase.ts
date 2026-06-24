@@ -6,7 +6,6 @@ export type ProductStatus =
   | 'Shipping Review'
   | 'Compliance Review'
   | 'Test Order Required'
-  | 'Approved for Shopify'
   | 'Approved for TikTok Shop'
   | 'Live'
   | 'Scaling'
@@ -48,7 +47,7 @@ export type SyncAction =
 
 export type SyncStatus = 'pending' | 'success' | 'error' | 'skipped'
 
-export type OrderChannel = 'shopify' | 'tiktok' | 'manual'
+export type OrderChannel = 'tiktok' | 'manual'
 
 export type SlaRisk = 'green' | 'yellow' | 'orange' | 'red'
 
@@ -116,7 +115,6 @@ export interface Product {
   short_description: string | null
   status: ProductStatus
   approval_status: ApprovalStatus
-  shopify_product_id: string | null
   tiktok_product_id: string | null
   autods_product_id: string | null
   primary_supplier_id: string | null
@@ -156,7 +154,6 @@ export interface Product {
   test_order_date: string | null
   test_tracking_status: string | null
   score: number
-  approved_for_shopify: boolean
   approved_for_tiktok: boolean
   approved_to_scale: boolean
   hero_image_url: string | null
@@ -267,7 +264,6 @@ export interface ProductScore {
   compliance_score: number
   disqualifiers: string[] | null
   recommendations: string[] | null
-  approved_for_shopify: boolean
   approved_for_tiktok: boolean
   approved_to_scale: boolean
   created_at: string
@@ -317,7 +313,6 @@ export interface SyncLog {
 
 export interface Order {
   id: string
-  shopify_order_id: string | null
   tiktok_order_id: string | null
   customer_name: string | null
   customer_email: string | null
@@ -463,7 +458,6 @@ export interface ScoreBreakdown {
   compliance: number
   disqualifiers: string[]
   recommendations: string[]
-  approved_for_shopify: boolean
   approved_for_tiktok: boolean
   approved_to_scale: boolean
 }
@@ -498,7 +492,6 @@ export interface ScoreInput {
 
 export interface DashboardStats {
   total_products: number
-  approved_for_shopify: number
   approved_for_tiktok: number
   live_products: number
   blocked_by_shipping: number

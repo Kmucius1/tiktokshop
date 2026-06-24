@@ -11,7 +11,6 @@ import type { ProductStatus } from '@/types/supabase'
 interface SearchParams {
   status?: string
   category?: string
-  shopify?: string
   tiktok?: string
   type?: string
   q?: string
@@ -29,7 +28,7 @@ export default async function ProductsPage({
     .from('products')
     .select(`
       id, title, slug, category, status, score, product_type,
-      approved_for_shopify, approved_for_tiktok, approved_to_scale,
+      approved_for_tiktok, approved_to_scale,
       selling_price, landed_cost, shipping_cost, margin_percent,
       warehouse_country, tracking_supported, tracking_carrier,
       handling_days_max, delivery_days_max,
@@ -43,8 +42,6 @@ export default async function ProductsPage({
   if (params.category) query = query.eq('category', params.category)
   if (params.type === 'affiliate') query = query.eq('product_type', 'amazon_affiliate')
   if (params.type === 'dropship') query = query.neq('product_type', 'amazon_affiliate')
-  if (params.shopify === 'true') query = query.eq('approved_for_shopify', true)
-  if (params.shopify === 'false') query = query.eq('approved_for_shopify', false)
   if (params.tiktok === 'true') query = query.eq('approved_for_tiktok', true)
   if (params.tiktok === 'false') query = query.eq('approved_for_tiktok', false)
   if (params.q) query = query.ilike('title', `%${params.q}%`)
@@ -59,7 +56,7 @@ export default async function ProductsPage({
 
   const statuses: ProductStatus[] = [
     'Researching', 'Supplier Review', 'Shipping Review', 'Compliance Review',
-    'Test Order Required', 'Approved for Shopify', 'Approved for TikTok Shop',
+    'Test Order Required', 'Approved for TikTok Shop',
     'Live', 'Scaling', 'Paused', 'Disabled',
   ]
 
@@ -114,15 +111,6 @@ export default async function ProductsPage({
             {uniqueCategories.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
           <select
-            name="shopify"
-            defaultValue={params.shopify}
-            className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none"
-          >
-            <option value="">Shopify: All</option>
-            <option value="true">Approved</option>
-            <option value="false">Not Approved</option>
-          </select>
-          <select
             name="tiktok"
             defaultValue={params.tiktok}
             className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none"
@@ -154,7 +142,6 @@ export default async function ProductsPage({
                 <th className="px-4 py-3 text-left font-medium">Warehouse</th>
                 <th className="px-4 py-3 text-left font-medium">Delivery</th>
                 <th className="px-4 py-3 text-left font-medium">Margin</th>
-                <th className="px-4 py-3 text-left font-medium">Shopify</th>
                 <th className="px-4 py-3 text-left font-medium">TikTok</th>
               </tr>
             </thead>
@@ -215,15 +202,6 @@ export default async function ProductsPage({
                           {formatPercent(margin)}
                         </span>
                       ) : '—'}
-                    </td>
-                    <td className="px-4 py-3">
-                      {affiliate ? (
-                        <span className="text-gray-300 text-xs">—</span>
-                      ) : p.approved_for_shopify ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <XCircle className="h-4 w-4 text-gray-300" />
-                      )}
                     </td>
                     <td className="px-4 py-3">
                       {affiliate ? (

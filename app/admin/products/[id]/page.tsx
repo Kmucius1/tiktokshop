@@ -33,7 +33,6 @@ export default async function ProductDetailPage({ params }: Props) {
     { data: checklist },
     { data: notes },
     { data: approvalHistory },
-    { data: shopifyLogs },
     { data: tiktokLogs },
     { data: lastScore },
     { data: contentAngles },
@@ -42,7 +41,6 @@ export default async function ProductDetailPage({ params }: Props) {
     supabase.from('product_checklists').select('*').eq('product_id', id).single(),
     supabase.from('admin_notes').select('*, profiles(full_name, email)').eq('entity_type', 'product').eq('entity_id', id).order('created_at', { ascending: false }),
     supabase.from('product_approval_events').select('*, profiles(full_name)').eq('product_id', id).order('created_at', { ascending: false }),
-    supabase.from('shopify_sync_logs').select('*').eq('product_id', id).order('created_at', { ascending: false }).limit(10),
     supabase.from('tiktok_sync_logs').select('*').eq('product_id', id).order('created_at', { ascending: false }).limit(10),
     supabase.from('product_scores').select('*').eq('product_id', id).order('created_at', { ascending: false }).limit(1),
     supabase.from('content_angles').select('*').eq('product_id', id).order('created_at', { ascending: false }).limit(5),
@@ -110,9 +108,6 @@ export default async function ProductDetailPage({ params }: Props) {
             )}
             <ProductStatusBadge status={product.status} />
             {!isAffiliate && <ScoreBadge score={product.score} />}
-            {!isAffiliate && product.approved_for_shopify && (
-              <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700">Shopify Approved</span>
-            )}
             {!isAffiliate && product.approved_for_tiktok && (
               <span className="rounded-full bg-pink-100 px-2.5 py-0.5 text-xs font-medium text-pink-700">TikTok Approved</span>
             )}
@@ -144,7 +139,6 @@ export default async function ProductDetailPage({ params }: Props) {
               {row('Slug', <span className="font-mono text-xs">{product.slug}</span>)}
               {row('Short Description', product.short_description)}
               {row('Tags', product.tags?.join(', '))}
-              {!isAffiliate && row('Shopify ID', product.shopify_product_id ?? <span className="text-gray-400 text-xs">Not synced</span>)}
               {!isAffiliate && row('TikTok ID', product.tiktok_product_id ?? <span className="text-gray-400 text-xs">Not synced</span>)}
               {!isAffiliate && row('AutoDS ID', product.autods_product_id ?? <span className="text-gray-400 text-xs">Not imported</span>)}
               {row('Created', formatDateTime(product.created_at))}
@@ -343,7 +337,6 @@ export default async function ProductDetailPage({ params }: Props) {
           />
 
           {/* Sync logs — dropship only */}
-          {!isAffiliate && <SyncLogTable logs={shopifyLogs ?? []} title="Shopify Sync Logs" />}
           {!isAffiliate && <SyncLogTable logs={tiktokLogs ?? []} title="TikTok Sync Logs" />}
 
           {/* Admin notes — all products */}

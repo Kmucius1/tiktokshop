@@ -12,7 +12,6 @@ const statusConfig: Record<ProductStatus, { label: string; className: string }> 
   'Shipping Review': { label: 'Shipping Review', className: 'bg-blue-100 text-blue-700' },
   'Compliance Review': { label: 'Compliance Review', className: 'bg-yellow-100 text-yellow-800' },
   'Test Order Required': { label: 'Test Order Required', className: 'bg-orange-100 text-orange-700' },
-  'Approved for Shopify': { label: 'Ready for Shopify', className: 'bg-indigo-100 text-indigo-700' },
   'Approved for TikTok Shop': { label: 'Ready for review', className: 'bg-pink-100 text-pink-700' },
   'Live': { label: 'Live', className: 'bg-green-100 text-green-700' },
   'Scaling': { label: 'Scaling', className: 'bg-emerald-100 text-emerald-800' },

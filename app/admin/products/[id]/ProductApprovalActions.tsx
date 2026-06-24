@@ -85,14 +85,12 @@ export function ProductApprovalActions({
       compliance_score: breakdown.compliance,
       disqualifiers: breakdown.disqualifiers,
       recommendations: breakdown.recommendations,
-      approved_for_shopify: breakdown.approved_for_shopify,
       approved_for_tiktok: breakdown.approved_for_tiktok,
       approved_to_scale: breakdown.approved_to_scale,
     })
 
     await supabase.from('products').update({
       score: breakdown.total,
-      approved_for_shopify: breakdown.approved_for_shopify,
       approved_for_tiktok: breakdown.approved_for_tiktok,
       approved_to_scale: breakdown.approved_to_scale,
     }).eq('id', productId)
@@ -148,9 +146,6 @@ export function ProductApprovalActions({
       {msg && <span className="w-full text-xs text-green-600">{msg}</span>}
 
       {btn('Score Product', runScore, 'primary')}
-
-      {breakdown?.approved_for_shopify && !hasComplianceBlocker &&
-        btn('Approve for Shopify', () => transition('Approved for Shopify', { approved_for_shopify: true }), 'success')}
 
       {breakdown?.approved_for_tiktok && !hasComplianceBlocker &&
         btn('Approve for review', () => transition('Approved for TikTok Shop', { approved_for_tiktok: true }), 'success')}

@@ -41,10 +41,6 @@ export function ProductScoreBreakdown({ breakdown }: Props) {
           <p className="text-4xl font-bold text-gray-900">{breakdown.total}<span className="text-xl text-gray-400">/100</span></p>
         </div>
         <div className="space-y-1 text-right text-sm">
-          <div className={cn('flex items-center gap-1.5 justify-end', breakdown.approved_for_shopify ? 'text-green-600' : 'text-gray-400')}>
-            {breakdown.approved_for_shopify ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
-            Ready for Shopify
-          </div>
           <div className={cn('flex items-center gap-1.5 justify-end', breakdown.approved_for_tiktok ? 'text-green-600' : 'text-gray-400')}>
             {breakdown.approved_for_tiktok ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
             Ready for TikTok

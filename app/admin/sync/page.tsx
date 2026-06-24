@@ -8,30 +8,27 @@ export default async function SyncPage() {
   const supabase = await createClient()
 
   const [
-    { data: shopifyLogs },
     { data: tiktokLogs },
     { data: autoDSLogs },
   ] = await Promise.all([
-    supabase.from('shopify_sync_logs').select('*').order('created_at', { ascending: false }).limit(25),
     supabase.from('tiktok_sync_logs').select('*').order('created_at', { ascending: false }).limit(25),
     supabase.from('autods_sync_logs').select('*').order('created_at', { ascending: false }).limit(25),
   ])
 
-  const errorCount = (logs: typeof shopifyLogs) =>
+  const errorCount = (logs: typeof tiktokLogs) =>
     (logs ?? []).filter(l => l.status === 'error').length
 
   return (
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Sync Logs</h1>
-        <p className="mt-1 text-sm text-gray-500">Shopify, marketplace, and AutoDS sync activity</p>
+        <p className="mt-1 text-sm text-gray-500">TikTok Shop and AutoDS sync activity</p>
       </div>
 
       {/* Status overview */}
-      <div className="mb-8 grid grid-cols-3 gap-4">
+      <div className="mb-8 grid grid-cols-2 gap-4">
         {[
-          { name: 'Shopify', logs: shopifyLogs, note: 'Requires SHOPIFY_STORE_DOMAIN + SHOPIFY_ADMIN_ACCESS_TOKEN' },
-          { name: 'marketplace', logs: tiktokLogs, note: 'Requires marketplace credentials when enabled' },
+          { name: 'TikTok Shop', logs: tiktokLogs, note: 'Requires TikTok Shop credentials when enabled' },
           { name: 'AutoDS', logs: autoDSLogs, note: 'Requires AUTODS_API_KEY' },
         ].map(({ name, logs, note }) => {
           const errors = errorCount(logs)
@@ -57,8 +54,7 @@ export default async function SyncPage() {
       </div>
 
       <div className="space-y-6">
-        <SyncLogTable logs={shopifyLogs ?? []} title="Shopify Sync Logs" />
-        <SyncLogTable logs={tiktokLogs ?? []} title="Marketplace Sync Logs" />
+        <SyncLogTable logs={tiktokLogs ?? []} title="TikTok Shop Sync Logs" />
         <SyncLogTable logs={autoDSLogs ?? []} title="AutoDS Sync Logs" />
       </div>
     </div>

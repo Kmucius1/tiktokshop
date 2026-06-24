@@ -182,7 +182,6 @@ export function scoreProduct(input: ScoreInput): ScoreBreakdown {
   const disqualifiers = buildDisqualifiers(input, scores)
 
   const hasDisqualifier = disqualifiers.length > 0
-  const approved_for_shopify = !hasDisqualifier && total >= 75 && !!input.supplier_id
   const approved_for_tiktok =
     !hasDisqualifier &&
     total >= 85 &&
@@ -204,7 +203,6 @@ export function scoreProduct(input: ScoreInput): ScoreBreakdown {
     ...scores,
     disqualifiers,
     recommendations: [],
-    approved_for_shopify,
     approved_for_tiktok,
     approved_to_scale,
   }

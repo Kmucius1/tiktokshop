@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
     compliance_score: breakdown.compliance,
     disqualifiers: breakdown.disqualifiers,
     recommendations: breakdown.recommendations,
-    approved_for_shopify: breakdown.approved_for_shopify,
     approved_for_tiktok: breakdown.approved_for_tiktok,
     approved_to_scale: breakdown.approved_to_scale,
   })
@@ -41,7 +40,6 @@ export async function POST(request: NextRequest) {
   // Update product score
   await supabase.from('products').update({
     score: breakdown.total,
-    approved_for_shopify: breakdown.approved_for_shopify,
     approved_for_tiktok: breakdown.approved_for_tiktok,
     approved_to_scale: breakdown.approved_to_scale,
   }).eq('id', productId)
