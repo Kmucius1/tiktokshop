@@ -33,15 +33,18 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4">
       <div className="w-full max-w-sm">
+        {/* Logo */}
         <div className="mb-8 text-center">
-          <span className="text-2xl font-bold text-white">ViralVault</span>
-          <span className="ml-2 rounded bg-violet-500 px-1.5 py-0.5 text-xs font-semibold text-white">OS</span>
-          <p className="mt-2 text-sm text-gray-400">Admin dashboard — authorized access only</p>
+          <div className="inline-flex items-center gap-2">
+            <span className="text-2xl font-extrabold text-white">TikTokShop.art</span>
+            <span className="rounded bg-pink-600 px-1.5 py-0.5 text-xs font-bold text-white">Admin</span>
+          </div>
+          <p className="mt-2 text-sm text-gray-400">Sign in to your dashboard</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4 rounded-xl bg-gray-900 p-6">
+        <form onSubmit={handleLogin} className="space-y-4 rounded-2xl bg-gray-900 p-7 shadow-xl">
           {error && (
-            <div className="rounded-lg bg-red-900/50 border border-red-700 px-4 py-3 text-sm text-red-300">
+            <div className="rounded-lg border border-red-700 bg-red-900/40 px-4 py-3 text-sm text-red-300">
               {error}
             </div>
           )}
@@ -54,8 +57,8 @@ export default function AdminLoginPage() {
               onChange={e => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              placeholder="admin@example.com"
+              placeholder="you@example.com"
+              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 transition focus:border-pink-500 focus:outline-none focus:ring-1 focus:ring-pink-500"
             />
           </div>
 
@@ -67,28 +70,29 @@ export default function AdminLoginPage() {
               onChange={e => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
               placeholder="••••••••"
+              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 transition focus:border-pink-500 focus:outline-none focus:ring-1 focus:ring-pink-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-sky-600 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-500 disabled:opacity-50"
+            className="w-full rounded-lg bg-pink-600 py-3 text-sm font-semibold text-white transition hover:bg-pink-500 disabled:opacity-50"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in…' : 'Sign In'}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs text-gray-600">
-          TikTokShop.art Admin · Restricted Access
-        </p>
-        <p className="mt-2 text-center text-xs text-gray-700">
+        <p className="mt-5 text-center text-xs text-gray-600">
           First time?{' '}
-          <a href="/admin/setup" className="text-gray-500 hover:text-gray-300 underline">
-            Create your account
+          <a href="/admin/setup" className="text-gray-400 underline hover:text-white">
+            Create your admin account
           </a>
+        </p>
+
+        <p className="mt-3 text-center text-xs text-gray-700">
+          TikTokShop.art · Restricted access
         </p>
       </div>
     </div>
