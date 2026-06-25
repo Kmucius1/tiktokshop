@@ -10,7 +10,6 @@ interface Product {
   title: string
   hero_image_url: string | null
   selling_price: number | null
-  inventory: number | null
   listing_status: string | null
   category: string | null
   tiktok_listings: { tiktok_title: string | null; listing_status: string | null }[] | null
@@ -28,7 +27,7 @@ export default function TikTokExportPage() {
     async function load() {
       let query = supabase
         .from('products')
-        .select('id, title, hero_image_url, selling_price, inventory, listing_status, category, tiktok_listings(tiktok_title, listing_status)')
+        .select('id, title, hero_image_url, selling_price, listing_status, category, tiktok_listings(tiktok_title, listing_status)')
         .order('created_at', { ascending: false })
 
       if (filter === 'ready') {
@@ -169,7 +168,7 @@ export default function TikTokExportPage() {
                     </td>
                     <td className="px-4 py-3 text-gray-500">{p.category ?? '—'}</td>
                     <td className="px-4 py-3 font-medium">{p.selling_price ? `$${p.selling_price.toFixed(2)}` : '—'}</td>
-                    <td className="px-4 py-3 text-gray-500">{p.inventory ?? '—'}</td>
+                    <td className="px-4 py-3 text-gray-500">—</td>
                     <td className="px-4 py-3">
                       <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                         p.listing_status === 'Draft Ready'    ? 'bg-sky-100 text-sky-700' :
