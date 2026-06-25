@@ -59,15 +59,24 @@ export default function TikTokExportPage() {
       body:    JSON.stringify({ productIds: Array.from(selected), format }),
     })
 
-    if (res.ok) {
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = document.createElement('a')
-      a.href     = url
-      a.download = `tiktok-export-${new Date().toISOString().slice(0, 10)}.xlsx`
-      a.click()
-      URL.revokeObjectURL(url)
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      alert(`Export failed: ${err.error ?? res.statusText}`)
+      setExporting(false)
+      return
     }
+
+    const blob = await res.blob()
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
+    a.href     = url
+    a.download = `tiktok-export-${new Date().toISOString().slice(0, 10)}.xlsx`
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(() => {
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }, 100)
 
     setExporting(false)
   }
